@@ -12,10 +12,10 @@ class Vec3D {
     float z;
 
     public:
-    Vec3D::Vec3D(float x, float y, float z);
     void show (st::string label, Vec3D const &self) const;
     void show(st::string label, float scalar) const;
     void show () const;
+    Vec3D(float x, float y, float z);
     Vec3D minus (Vec3D const &self) const;
     Vec3D add (Vec3D const &self, Vec3D const &other) const;
     Vec3D sub (Vec3D const &self, Vec3D const &other) const;
@@ -164,9 +164,11 @@ return sqrt(pow(self.x, 2) + pow(self.y, 2) + pow(self.z, 2));
       return Vec3D((self.y*other.z - self.z*other.y), (self.z*other.x - self.x*other.z), (self.x*other.y - self.y*other.x));
  
 
- }
+  }
 
- class Ray{
+
+
+   class Ray{
     friend class Vec3D;
 
     protected:
@@ -176,24 +178,11 @@ return sqrt(pow(self.x, 2) + pow(self.y, 2) + pow(self.z, 2));
 
     Ray (float xSup, float ySup, float zSup, float xDir, float yDir, float zDir) {
      support.x = xSup;
-      support.y = ySup;
-       support.z = zSup;
-
+     support.y = ySup;
+     support.z = zSup;
      direction.x = xDir;
-      direction.y = yDir;
-       direction.z = zDir;
-    
-
+     direction.y = yDir;
+     direction.z = zDir;
     }
- }
-
-
-
-
-
-
-
-
-
+ 
  };
-
