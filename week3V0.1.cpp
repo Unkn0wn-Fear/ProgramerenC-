@@ -25,19 +25,13 @@ class Vec3D {
     Vec3D unit (Vec3D const &self) const;
     float dot (Vec3D const &self, Vec3D const &other) const;
     Vec3D cross (Vec3D const &self, Vec3D const &other) const;
-
-
-
-
 };
 
 
 
 Vec3D::Vec3D(float x, float y, float z):
     x(x),y(y),z(z)
-{
-
-}
+{}
 
 void Vec3D::show (st::string label, Vec3D const &self) const{
     //variablen van dit type afdrukt in een console window, gelabeld met hun naam en afgesloten
@@ -138,32 +132,19 @@ return sqrt(pow(self.x, 2) + pow(self.y, 2) + pow(self.z, 2));
     //en vector returnt met dezelfde richting als z'n self, maar met lengte 1
     auto normsvector = norm(self);
     return Vec3D(self.x / normsvector, self.y / normsvector, self.z / normsvector);
-
-
- 
-
  }
-
- 
 
  float Vec3D::dot (Vec3D const &self, Vec3D const &other) const{
 
     // het inproduct (dot product) van self en other returnt
 
     return (self.x * other.x) + (self.y * other.y) + (self.z * other.z);
-
  }
-
-
-
- 
 
  Vec3D Vec3D::cross (Vec3D const &self, Vec3D const &other) const{
 
     //het uitproduct (cross product) van self en other returnt
       return Vec3D((self.y*other.z - self.z*other.y), (self.z*other.x - self.x*other.z), (self.x*other.y - self.y*other.x));
- 
-
   }
 
 
@@ -186,3 +167,24 @@ return sqrt(pow(self.x, 2) + pow(self.y, 2) + pow(self.z, 2));
     }
  
  };
+
+
+
+ class Sphere
+ {
+ protected:
+ Vec3D center = Vec3D(0,0,0);
+ float radius;
+ 
+ public:
+ Sphere (float x, float y, float z, float radius) {
+
+ }
+
+ 
+ 
+ 
+ };
+
+    
+ 
