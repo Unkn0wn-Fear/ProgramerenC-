@@ -1,5 +1,5 @@
 #include <iostream>
-#include <math.h>
+#include "math.h"
 #include <vector>
 
 namespace st = std;
@@ -178,13 +178,46 @@ return sqrt(pow(self.x, 2) + pow(self.y, 2) + pow(self.z, 2));
  
  public:
  Sphere (float x, float y, float z, float radius) {
+    center.x = x;
+    center.y = y;
+    center.z = z;
+    radius = radius;
 
  }
-
- 
- 
  
  };
 
+
+ float distFromRay (Ray const &ray) const {
+     return ray.support.sub (center) .cross (ray.direction) .norm ();
+ }
+
+bool hit (Ray const &ray) const {
+            if (distFromRay(ray) < radius){
+                ray.support = hitPoint(ray);
+                auto normaal = ray.support.sub(center) .unit();
+                auto radial = normaal.mul(ray.direction.dot(normaal));
+                auto tangential = ray.direction.sub(radial);
+                ray.direction = tangential.sub(radial).unit();
+                return true;
+            }
+            return false ;
+        }
+
+}
+
+Vec3D hitPoint (Ray const &ray) const {
+        Vec3D Sphere::hitPoint(Ray &ray){
+        auto blabla = ray.support.sub(center);
+        auto nable = pow(ray.direction.dot(blabla), 2) - pow(blabla.norm(), 2) + pow(radius, 2);
+        auto distFromSupport = -ray.direction.dot(blabla) - sqrt(nable);
+        return ray.support.add(ray.direction.mul(distFromSupport));
+    }
     
+}
+
  
+int main() {
+    
+std::cout <<"kaas tostie" << std:endl;
+}
