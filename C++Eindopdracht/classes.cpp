@@ -175,42 +175,15 @@ Object::Object (float x, float y, float z): center (x, y, z) {}
 }
 
 
-bool Sphere::hit(Ray &ray) {
-    float distance = distFromRay(ray);
-    if (distance < radius) {
-        ray.support = hitPoint(ray);
-        return true;
-    }
-    return false;
+bool Sphere::hit(Ray const &ray) const{
+return distFromRay(ray) <= radius;
 }
 
-    bool Object::hit(Ray &ray){
-
-    }
+bool Object::hit(Ray const &ray)const {
+}
 
 bool Floor::hit(Ray const &ray) const
 {
-    Ray r = ray;
-    auto widthSquares = 0.1;
-
-    //https://en.wikipedia.org/wiki/Line%E2%80%93plane_intersection
-    // normal vector that is perpendicular to the floor
-    auto normalVector = Vec3D(0, 1, 0);
-
-    // dotproduct is zero, the vector and normal vector are right-angled.
-    // dotproduct is zero, floor hit, return true
-
-    // Distance between hit point and start from Ray.
-    auto d = center.sub(r.support).dot(normalVector) / r.direction.dot(normalVector);
-
-    // x, y, z are : p = l0 + l * d
-
-    auto hitpoint = r.support.add(r.direction.mul(d));
-
-    hitpoint = r.direction.mul(d);
-
-    //  The Floor is hit, hitpoint is behind the screen and white square at hitpoint return true
-    return (hitpoint.z > 0 && ((int)(hitpoint.z / widthSquares) % 2 == 0 ^ (int)(hitpoint.x / widthSquares) % 2 == 0));
 }
 
 

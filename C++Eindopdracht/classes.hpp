@@ -84,7 +84,7 @@ namespace eindopdracht{
     public:
    
         Object (float x, float y, float z);
-        virtual bool hit(Ray &ray) = 0;      
+        virtual bool hit(Ray const &ray) const = 0;      
 
     };
 
@@ -115,7 +115,7 @@ namespace eindopdracht{
     public:
         Sphere(float x, float y, float z, float radius);
         float distFromRay(Ray const &ray) const;
-        bool hit(Ray &ray);
+        bool hit(Ray const &ray)const;
         Vec3D hitPoint(Ray const &ray);
         //Vec3D hitPoint(Ray &ray);
     };
