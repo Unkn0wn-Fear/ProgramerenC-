@@ -4,9 +4,9 @@
             "name": "windows-gcc-x86",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/include/c++/11"
+                "C:\\Users\\Marij\\Documents\\GitHub\\ProgramerenC-\\C++Eindopdracht"
             ],
-            "compilerPath": "MinGW/bin/gcc.exe",
+            "compilerPath": "../.../../../../../../MinGW/bin/gcc.exe",
             "cStandard": "${default}",
             "cppStandard": "${default}",
             "intelliSenseMode": "windows-gcc-x86",

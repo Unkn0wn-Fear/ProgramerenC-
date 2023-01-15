@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Marij/Documents/GitHub/ProgramerenC-",
-      "program": "c:/Users/Marij/Documents/GitHub/ProgramerenC-/build/Debug/outDebug",
+      "cwd": "c:/Users/Marij/Documents/GitHub/ProgramerenC-/C++Eindopdracht",
+      "program": "c:/Users/Marij/Documents/GitHub/ProgramerenC-/C++Eindopdracht/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

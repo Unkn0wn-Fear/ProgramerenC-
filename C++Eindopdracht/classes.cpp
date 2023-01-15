@@ -1,11 +1,13 @@
 #include <iostream>
 #include "math.h"
 #include <vector>
-#include "/home/marijn/Documents/C++Eindopdracht/classes.hpp"
-// #include "classes.hpp"
+#include "classes.hpp"
 namespace st = std;
 
-#define VPO = st::vector <Object*>
+
+#define VF std::vector<float>
+#define VVF std::vector<VF>
+
 namespace eindopdracht{
 
 
@@ -18,13 +20,11 @@ Vec3D::Vec3D(float x, float y, float z):
 void Vec3D::show (st::string label) const{
     //variablen van dit type afdrukt in een console window, gelabeld met hun naam en afgesloten
     //met een newline
-
           std::cout << label << ' ' << x << ' ' << y << ' ' << z;
               std::cout << '\n';
 }
 
  
-
 void Vec3D::show (st::string label, float scalar) const{
     //die floating point
     //scalars afdrukt in een console window, gelabeld met hun naam en afgesloten met een
@@ -35,14 +35,12 @@ void Vec3D::show (st::string label, float scalar) const{
 }
 
  
-
 void Vec3D::show() const{
       std::cout << '\n';
 
 }
 
  
-
 Vec3D Vec3D::minus () const {
     //die een vector returnt die de
     //andere kant op wijst als self
@@ -104,8 +102,6 @@ return sqrt(pow( x, 2) + pow( y, 2) + pow( z, 2));
 
 }
 
- 
-
  Vec3D Vec3D::unit () const{
 
     //en vector returnt met dezelfde richting als z'n self, maar met lengte 1
@@ -127,21 +123,17 @@ return sqrt(pow( x, 2) + pow( y, 2) + pow( z, 2));
   }
 
 
-
-
-
-Sphere::Sphere (float x, float y, float z, float radius) :Object(x,y,z) {
+Sphere::Sphere (float x, float y, float z, float radius) : Object(x,y,z) {
     center.x = x;
     center.y = y;
     center.z = z;
     radius = radius;
     
  }
-
-
-float Sphere::distFromRay (Ray const &ray)const
-{
-    return ray.support.sub (center).cross(ray.direction).norm ();
+Floor::Floor(float x, float y, float z) : Object(x,y,z)  {
+    center.x = x;
+    center.y = y;
+    center.z = z;
 }
 
 Ray::Ray (float xSup, float ySup, float zSup, float xDir, float yDir, float zDir){
@@ -151,36 +143,120 @@ Ray::Ray (float xSup, float ySup, float zSup, float xDir, float yDir, float zDir
      direction.x = xDir;
      direction.y = yDir;
      direction.z = zDir;
-    }
+}
 
-Vec3D Sphere::hitPoint(Ray &ray){
+
+float Sphere::distFromRay (Ray const &ray)const
+{
+    return ray.support.sub (center).cross(ray.direction).norm ();
+}
+
+
+
+Vec3D Sphere::hitPoint(Ray const &ray){
         auto blabla = ray.support.sub(center);
         auto nable = pow(ray.direction.dot(blabla), 2) - pow(blabla.norm(), 2) + pow(radius, 2);
         auto distFromSupport = -ray.direction.dot(blabla) - sqrt(nable);
         return ray.support.add(ray.direction.mul(distFromSupport));
     }
 
-bool Sphere::hit(Ray  &ray)  {
-             if (distFromRay(ray) < radius){
-                auto a = hitPoint(ray);
-               ray.support = hitPoint(ray);
-                auto normaal = ray.support.sub(center) .unit();
-                auto radial = normaal.mul(ray.direction.dot(normaal));
-                auto tangential = ray.direction.sub(radial);
-                ray.direction = tangential.sub(radial).unit();
+Object::Object (float x, float y, float z): center (x, y, z) {}
+
+    //Deze method test in derived classes of het betreffende object geraakt wordt door de straal en
+    //wat de support vector en de direction vector van de weerkaatste straal zijn.
+
+    bool Ray::scan() {
+        for (auto OBJ : objects) {
+            if (OBJ->hit(*this)) {
                 return true;
             }
-            return false ;
         }
+        return false;
+}
 
 
-     Object::Object (float x, float y, float z): center (x, y, z) {}
-    //test of object geraakt word door de straal en wat de support vector en de direction verkort van de weerkaaste straal zijn 
+bool Sphere::hit(Ray &ray) {
+    float distance = distFromRay(ray);
+    if (distance < radius) {
+        ray.support = hitPoint(ray);
+        return true;
+    }
+    return false;
+}
+
     bool Object::hit(Ray &ray){
 
-     }
+    }
+
+bool Floor::hit(Ray const &ray) const
+{
+    Ray r = ray;
+    auto widthSquares = 0.1;
+
+    //https://en.wikipedia.org/wiki/Line%E2%80%93plane_intersection
+    // normal vector that is perpendicular to the floor
+    auto normalVector = Vec3D(0, 1, 0);
+
+    // dotproduct is zero, the vector and normal vector are right-angled.
+    // dotproduct is zero, floor hit, return true
+
+    // Distance between hit point and start from Ray.
+    auto d = center.sub(r.support).dot(normalVector) / r.direction.dot(normalVector);
+
+    // x, y, z are : p = l0 + l * d
+
+    auto hitpoint = r.support.add(r.direction.mul(d));
+
+    hitpoint = r.direction.mul(d);
+
+    //  The Floor is hit, hitpoint is behind the screen and white square at hitpoint return true
+    return (hitpoint.z > 0 && ((int)(hitpoint.z / widthSquares) % 2 == 0 ^ (int)(hitpoint.x / widthSquares) % 2 == 0));
+}
 
 
-    
+   void RayScanner::scan() {
+auto const RijXas = 96; 
+auto const RijYas = 3 * RijXas;
+auto const aspectRatio = 0.65;
+auto const ScreenDist = 3.00;
 
+auto const ascii = " M";
+
+
+
+
+
+auto const minRadius = 0.2;
+auto const maxRadius = 0.4;
+
+auto image = VVF (RijXas, VF(RijYas));
+
+ for (auto rowIndex = 0; rowIndex < RijXas;rowIndex++) {
+    auto y = (RijXas / 2. - rowIndex) / RijXas;
+        for (auto colIndex = 0; colIndex < RijYas; colIndex++) {  
+           auto x = (RijYas / 2 - colIndex ) / (aspectRatio * RijYas);
+            auto direction = Vec3D(x, y, 0).sub(Vec3D(0, 0, -ScreenDist));
+            Ray VisionRay(0, 0, ScreenDist, direction.x, direction.y, direction.z);
+                VisionRay.scan();
+                if (VisionRay.scan()== true ) {
+                    image [rowIndex][colIndex] = 1;
+                }
+                else {
+                    image [rowIndex][colIndex] = 0;
+                }
+
+        }
+  }
+    for (auto rowIndex = 0; rowIndex < RijXas; rowIndex++) {
+        for (auto colIndex = 0; colIndex < RijYas; colIndex++) {
+            if(image [rowIndex][colIndex] == 1)
+                std::cout << ascii[0];
+            else
+                std::cout << ascii[1];
+        }
+        std::cout << '\n';
+    }
+    std::cout << '\n';
+
+    }
 }
