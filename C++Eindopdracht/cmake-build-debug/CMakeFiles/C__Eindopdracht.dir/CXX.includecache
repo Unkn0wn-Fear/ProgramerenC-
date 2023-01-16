@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Marij/Documents/GitHub/ProgramerenC-/C++Eindopdracht/classes.cpp
+iostream
+-
+math.h
+C:/Users/Marij/Documents/GitHub/ProgramerenC-/C++Eindopdracht/math.h
+vector
+-
+classes.hpp
+C:/Users/Marij/Documents/GitHub/ProgramerenC-/C++Eindopdracht/classes.hpp
+
+C:/Users/Marij/Documents/GitHub/ProgramerenC-/C++Eindopdracht/classes.hpp
+iostream
+-
+math.h
+C:/Users/Marij/Documents/GitHub/ProgramerenC-/C++Eindopdracht/math.h
+vector
+-
+

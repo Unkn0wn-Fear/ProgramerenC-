@@ -1,0 +1,3 @@
+C:/Users/Marij/Documents/GitHub/ProgramerenC-/C++Eindopdracht/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Marij/Documents/GitHub/ProgramerenC-/C++Eindopdracht/cmake-build-debug/CMakeFiles/C__Eindopdracht.dir
+C:/Users/Marij/Documents/GitHub/ProgramerenC-/C++Eindopdracht/cmake-build-debug/CMakeFiles/edit_cache.dir
