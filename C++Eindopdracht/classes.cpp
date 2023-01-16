@@ -189,13 +189,27 @@ namespace eindopdracht{
 
     bool Floor::hit(Ray const &ray) const
     {
+    // mischien https://en.wikipedia.org/wiki/Line%E2%80%93plane_intersection
+    //formule wit en zwart rowindex%2 == columnindex%2
+
+    auto widthSquares = 3;
+    auto normalVector = Vec3D(0, 1, 0);
+
+    // Calculate distance between hit point and start of Ray
+    auto dot = center.sub(ray.support).dot(normalVector) / ray.direction.dot(normalVector);
+
+    // Calculate hit point
+    auto hitpoint = ray.support.add(ray.direction.mul(dot));
+
+    // Check if hit point is on the floor
+    return (hitpoint.z > 0 && ((int)(hitpoint.z / widthSquares) % 2 == 0 ^ (int)(hitpoint.x / widthSquares) % 2 == 0));
     }
 
 
     void RayScanner::scan() {
         auto const RijXas = 96;
         auto const RijYas = 3 * RijXas;
-        auto const aspectRatio = 0.65;
+        auto const aspectRatio = 0.4;
         auto const ScreenDist = 3.00;
 
         auto const ascii = std::string(" M");
